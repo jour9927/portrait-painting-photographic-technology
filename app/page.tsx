@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const products = [
-  { id: "mini", name: "微光肖像", en: "MINI PORTRAIT", price: 1800, size: "10 × 15 cm", tone: "peach" },
-  { id: "classic", name: "經典人像", en: "CLASSIC PORTRAIT", price: 4200, size: "20 × 25 cm", tone: "sage" },
-  { id: "memory", name: "記憶修復", en: "MEMORY RESTORATION", price: 3200, size: "數位修復檔", tone: "ink" },
+  { id: "mini", name: "微光肖像", en: "MINI PORTRAIT", price: 1800, size: "10 × 15 cm", tone: "peach", image: "/works/mini-portrait.png" },
+  { id: "classic", name: "經典人像", en: "CLASSIC PORTRAIT", price: 4200, size: "20 × 25 cm", tone: "sage", image: "/works/classic-portrait.png" },
+  { id: "memory", name: "記憶修復", en: "MEMORY RESTORATION", price: 3200, size: "數位修復檔", tone: "ink", image: "/works/memory-restoration.png" },
 ];
 
 const format = (value: number) => new Intl.NumberFormat("zh-TW", { style: "currency", currency: "TWD", maximumFractionDigits: 0 }).format(value);
@@ -28,7 +28,7 @@ export default function Home() {
         <div className="portrait-frame" aria-label="抽象人像展示圖"><div className="sun" /><div className="face"><span className="eye left" /><span className="eye right" /><span className="nose" /><span className="mouth" /></div><p>STUDIO / 2026</p></div>
       </section>
 
-      <section className="shop" id="shop"><div className="section-head"><p className="eyebrow">PORTRAIT SHOP</p><h2>為重要的人，<br />留一件獨特的作品。</h2></div><div className="product-grid">{products.map((product) => <article className={`product ${product.tone}`} key={product.id}><div className="product-art"><span>PP</span></div><p className="eyebrow">{product.en}</p><h3>{product.name}</h3><p className="product-detail">{product.size} · 含一次細節確認</p><div className="product-bottom"><b>{format(product.price)}</b><button onClick={() => add(product.id)}>加入購物車 <span>+</span></button></div></article>)}</div></section>
+      <section className="shop" id="shop"><div className="section-head"><p className="eyebrow">PORTRAIT SHOP</p><h2>為重要的人，<br />留一件獨特的作品。</h2></div><div className="product-grid">{products.map((product) => <article className={`product ${product.tone}`} key={product.id}><div className="product-art"><img src={product.image} alt={`${product.name} 成品示意`} /></div><p className="eyebrow">{product.en}</p><h3>{product.name}</h3><p className="product-detail">{product.size} · 含一次細節確認</p><div className="product-bottom"><b>{format(product.price)}</b><button onClick={() => add(product.id)}>加入購物車 <span>+</span></button></div></article>)}</div></section>
 
       <section className="process" id="process"><p className="eyebrow">HOW IT WORKS</p><h2>從一張照片，<i>開始。</i></h2><div className="steps"><div><b>01</b><h3>選擇作品</h3><p>選擇尺寸與創作方式，加入購物車。</p></div><div><b>02</b><h3>提供照片</h3><p>完成訂單後，我們會邀請你上傳照片。</p></div><div><b>03</b><h3>確認與寄送</h3><p>確認細節後製作，細心包裝送到你手中。</p></div></div></section>
 
