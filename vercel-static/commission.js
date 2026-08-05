@@ -20,3 +20,44 @@ commissionForm?.addEventListener("submit", (event) => {
 
   window.location.href = `mailto:charlesree826@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
+
+const SUPPORT_MAILBOX = "charlesree826@gmail.com";
+const supportForm = document.querySelector("#support-form");
+const supportOut = document.querySelector("#support-out");
+const supportText = document.querySelector("#support-text");
+const supportMail = document.querySelector("#support-mail");
+const supportCopied = document.querySelector("#support-copied");
+
+supportForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(supportForm);
+  const subject = `客服詢問｜${data.get("topic")}｜${data.get("name")}`;
+  const body = [
+    "您好，我想聯絡工作室客服：",
+    "",
+    `姓名或稱呼：${data.get("name")}`,
+    `電子信箱：${data.get("email")}`,
+    `問題類型：${data.get("topic")}`,
+    `委託項目或訂單編號：${data.get("order") || "（未填）"}`,
+    "",
+    "問題說明：",
+    `${data.get("message")}`,
+  ].join("\n");
+
+  supportText.value = [`收件信箱：${SUPPORT_MAILBOX}`, `主旨：${subject}`, "", body].join("\n");
+  supportMail.href = `mailto:${SUPPORT_MAILBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  supportCopied.textContent = "";
+  supportOut.classList.add("on");
+  supportOut.scrollIntoView({ block: "center" });
+});
+
+document.querySelector("#support-copy")?.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(supportText.value);
+    supportCopied.textContent = `已複製，請寄至 ${SUPPORT_MAILBOX}`;
+  } catch {
+    supportText.focus();
+    supportText.select();
+    supportCopied.textContent = "已選取全文，請按 ⌘C（Windows 為 Ctrl+C）複製後寄出。";
+  }
+});
